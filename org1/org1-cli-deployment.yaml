@@ -48,33 +48,13 @@ spec:
           volumeMounts:
             # - mountPath: /host/var/run/
             #   name: cli-claim0
-            - mountPath: /opt/gopath/src/github.com/marbles/
-              name: cli-claim1
             - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/channel-artifacts
-              name: cli-claim2
+              name: peer0-org1-pvc
             - mountPath: /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
-              name: cli-claim3
-            - mountPath: /opt/gopath/src/github.com/fabcar/
-              name: cli-fabcar
+              name: peer0-org1-pvc
           workingDir: /opt/gopath/src/github.com/hyperledger/fabric/peer
       restartPolicy: Always
       volumes:
-        # - name: cli-claim0
-        #   hostPath:
-        #     path: /var/run/
-        #     type: Directory
-        - name: cli-claim1
-          hostPath:
-            path: /home/fabric-external-chaincodes/chaincode
-            type: Directory
-        - name: cli-claim2
-          hostPath:
-            path: /home/fabric-external-chaincodes/channel-artifacts
-            type: Directory
-        - name: cli-claim3
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config
-            type: Directory
-        - name: cli-fabcar
-          hostPath:
-            path: /home/fabric-external-chaincodes/fabcar
+        - name: peer0-org1-pvc
+          persistentVolumeClaim:
+            claimName: peer0-org1-pvc

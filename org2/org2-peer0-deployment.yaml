@@ -64,10 +64,8 @@ spec:
             - containerPort: 7053
             - containerPort: 9443
           volumeMounts:
-            - mountPath: /etc/hyperledger/fabric/msp
-              name: peer0-org2-claim1
-            - mountPath: /etc/hyperledger/fabric/tls
-              name: peer0-org2-claim2
+            - mountPath: /etc/hyperledger/fabric
+              name: peer0-org2-pvc
             - mountPath: /var/hyperledger/production
               name: peer0-persistentdata
             - mountPath: /etc/hyperledger/fabric/core.yaml
@@ -84,18 +82,11 @@ spec:
               subPath: release
       restartPolicy: Always
       volumes:
-        - name: peer0-org2-claim1
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/msp
-            type: Directory
-        - name: peer0-org2-claim2
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/tls
-            type: Directory
+        - name: peer0-org2-pvc
+          persistentVolumeClaim:
+            claimName: peer0-org2-pvc
         - name: peer0-persistentdata
-          hostPath:
-            path: /home/storage/peer0-org2
-            type: DirectoryOrCreate
+          emptyDir: {}
         - name: builders-config
           configMap:
             name: builders-config
