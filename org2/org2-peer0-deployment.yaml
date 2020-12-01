@@ -86,7 +86,8 @@ spec:
           persistentVolumeClaim:
             claimName: peer0-org2-pvc
         - name: peer0-persistentdata
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: peer0-org2-persist-pvc
         - name: builders-config
           configMap:
             name: builders-config
